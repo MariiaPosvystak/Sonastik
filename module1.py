@@ -64,35 +64,95 @@ RU=dict()
 
 #1
 def tolgi_est_rus(EE: dict, sona: str):
+    """ Funktsioon tõlgib eesti keele sõna vene keelde.
+    :param sona: sõna, mida soovitakse tõlkida
+    :param EE: eesti keele sõnastik
+    :param RU: vene keele sõnastik
+    :type sona: str
+    :type EE: dict
+    :type RU: dict
+    :return: vene keele tõlge
     """
-    """
-    sona=str(input("Введите слово которое хотите перевести ")).strip().lower()
+    sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
     print(EE.get(sona))
 
 #2
 def tolgi_rus_est(RU: dict, sona: str):
+    """ Funktsioon tõlgib vene keele sõna eesti keede.
+    :param sona: sõna, mida soovitakse tõlkida
+    :param EE: eesti keele sõnastik
+    :param RU: vene keele sõnastik
+    :type sona: str
+    :type EE: dict
+    :type RU: dict
+    :return: eesti keele tõlge
     """
-    """
-    sona=str(input("Введите слово которое хотите перевести ")).strip().lower()
+    sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
     print(RU.get(sona))
 
 #3
 def lisa_sona(EE: dict, RU: dict, est: str, rus: str):
+    """ Funktsioon lisab sõna eesti-vene sõnastikku.
+    :param est: eesti keele sõna
+    :param rus: vene keele sõna
+    :param EE: eesti keele sõnastik
+    :param RU: vene keele sõnastik
+    :type est: str
+    :type rus: str
+    :type EE: dict
+    :type RU: dict
+    :return: sõna lisamine sõnastikku
     """
-    """
-    est=str(input("Введите слово на естонском")).strip().lower()
-    rus=str(input("Введите слово на русском")).strip().lower()
+    est=str(input("Sisestage sõna eesti keeles: ")).strip().lower()
+    rus=str(input("Sisestage sõna vene keeles: ")).strip().lower()
     EE["est"] = "rus"
     RU["rus"] = "est"
     return est, rus
 
 #4
-def paranda_sona():
+def paranda_sona(EE: dict, RU: dict, s: str, new_rus: str, new_est: str):
+    """ Funktsioon parandab sõna eesti-vene sõnastikus.
+    :param EE: eesti keele sõnastik
+    :param RU: vene keele sõnastik
+    :type EE: dict
+    :type RU: dict
+    :return: sõna parandamine sõnastikus
     """
+    s = input("Sisestage sõna, mida soovite parandada: ").strip().lower()
+    if s in EE:
+        print(f"Sõna leiti eesti-vene sõnastikust: {s} -> {EE[s]}")
+        new_rus = input("Sisestage parandatud sõna vene keeles: ").strip().lower()
+        EE[s] = new_rus 
+        RU[new_rus] = s  
+        print("Sõna parandati edukalt!")
+    elif s in RU:
+        print(f"Sõna leiti vene-eesti sõnastikust: {s} -> {RU[s]}")
+        new_est = input("Sisestage parandatud sõna eesti keeles: ").strip().lower()
+        RU[s] = new_est 
+        EE[new_est] = s 
+        print("Sõna parandati edukalt!")
+    else:
+        print("Sõna ei leitud sõnastikust")
+
+#5
+def testi_tewissen(EE: dict, RU: dict, answer: str):
+    """ Funktsioon testib teadmisi eesti-vene sõnastikus.
+    :param EE: eesti keele sõnastik
+    :param RU: vene keele sõnastik
+    :type EE: dict
+    :type RU: dict
+    :return: testi tulemused
     """
-    S=str(input("Введите слово которое хотите изменить ")).strip().lower()
-
-    EE["est"] = "rus"
-    RU["rus"] = "est"
-
- # testi_tewissen()
+    correct=0
+    total=0
+    print("Testi algus\n"
+          "Sisestage sõna tõlge eesti keeles")
+    for est, rus in EE.items():
+        total +=1
+        answer=input(rus).strip().lower()
+        if answer==est:
+            print("Õige!")
+            correct +=1
+        else:
+            print(f"Vale, õige vastus on - {est}")
+    print(f"Test on lõppenud! Teie tulemus: {correct/total*100}%")

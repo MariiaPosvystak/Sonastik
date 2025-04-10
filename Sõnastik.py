@@ -64,29 +64,32 @@ EE=dict(koer="собака", kodu="дом", päike="солнце", mets="лес"
         kool="школа", raamat="книга", sinine="синий", taevas="небо")
 RU=dict(собака="koer", дом="kodu", солнце="päike", лес="mets", пожалуйста="palun", утро="hommik",
         школа="kool", книга="raamat", синий="sinine", небо="taevas")
-print(EE)
 
 while True:
-    print("/n Menuu: "
-    "1 - Tõlgi eesti -> vene /n"
-    "2 - Tõlgi vene -> eesti /n"
-    "3 - Lisa uus sõna /n"
-    "4 - Paranda sõna /n"
-    "5 - Testi teadmisi /n"
+    print("\n Menuu: \n"
+    "1 - Tõlgi eesti -> vene \n"
+    "2 - Tõlgi vene -> eesti \n"
+    "3 - Lisa uus sõna \n"
+    "4 - Paranda sõna \n"
+    "5 - Testi teadmisi \n"
     "6 - Välju")
     try:
         valik=int(input("Palun valige menuust üks valik(1-6): "))
     except ValueError:
         print("Palun, sisestage arv")
     if valik==1:
-        print
+        sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
+        if sona in EE:
+            print("Vene keeles on sõna: ", EE[sona])
+        else:
+            print("Vene keeles pole sõna: ", sona)
     elif valik==2:
-        print
+        print(tolgi_rus_est)
     elif valik==3:
-        print
+        print(lisa_sona)
     elif valik==4:
-        print
+        print(paranda_sona)
     elif valik==5:
-        print
+        print(testi_tewissen)
     elif valik==6:
         break
