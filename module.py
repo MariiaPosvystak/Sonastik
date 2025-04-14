@@ -62,6 +62,21 @@
 EE=dict()
 RU=dict()
 
+def salvestamine_faili(Sõnastik: str, d: dict):
+    with open(Sõnastik, 'w', encoding='utf-8-sig') as file:
+        for key, value in d.items():
+            file.write(f"{key}:{value}\n")
+
+def laadimine_failist(Sõnastik: str):
+    d = {}
+    try:
+        with open(Sõnastik, 'r', encoding='utf-8-sig') as file:
+            for line in file:
+                key, value = line.strip().split(':')
+                d[key] = value
+    except FileNotFoundError:
+        pass
+    return d
 #1
 def tolgi_est_rus(EE: dict, sona: str):
     """ Funktsioon tõlgib eesti keele sõna vene keelde.
@@ -74,7 +89,7 @@ def tolgi_est_rus(EE: dict, sona: str):
     :return: vene keele tõlge
     """
     sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
-    print(EE.get(sona))
+    return EE.get(sona)
 
 #2
 def tolgi_rus_est(RU: dict, sona: str):
@@ -88,7 +103,7 @@ def tolgi_rus_est(RU: dict, sona: str):
     :return: eesti keele tõlge
     """
     sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
-    print(RU.get(sona))
+    return RU.get(sona)
 
 #3
 def lisa_sona(EE: dict, RU: dict, est: str, rus: str):
@@ -105,8 +120,8 @@ def lisa_sona(EE: dict, RU: dict, est: str, rus: str):
     """
     est=str(input("Sisestage sõna eesti keeles: ")).strip().lower()
     rus=str(input("Sisestage sõna vene keeles: ")).strip().lower()
-    EE["est"] = "rus"
-    RU["rus"] = "est"
+    EE[est] = "rus"
+    RU[rus] = "est"
     return est, rus
 
 #4

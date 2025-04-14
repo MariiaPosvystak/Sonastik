@@ -59,11 +59,9 @@
 # Sisesta vene tõlge sõnale 'päike': солнце
 # Õige!
 # Test lõppenud! Sinu tulemus: 100%
-from module1 import *
-EE=dict(koer="собака", kodu="дом", päike="солнце", mets="лес", palun="пожалуйста", hommik="утро",
-        kool="школа", raamat="книга", sinine="синий", taevas="небо")
-RU=dict(собака="koer", дом="kodu", солнце="päike", лес="mets", пожалуйста="palun", утро="hommik",
-        школа="kool", книга="raamat", синий="sinine", небо="taevas")
+from module import *
+EE = laadimine_failist('EE.txt')
+RU = laadimine_failist('RU.txt')
 
 while True:
     print("\n Menuu: \n"
@@ -77,19 +75,28 @@ while True:
         valik=int(input("Palun valige menuust üks valik(1-6): "))
     except ValueError:
         print("Palun, sisestage arv")
-    if valik==1:
-        sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
-        if sona in EE:
-            print("Vene keeles on sõna: ", EE[sona])
+        continue
+    if valik == 1:
+        sona = str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
+        translation = tolgi_est_rus(EE, sona)
+        if translation:
+            print(f"Vene keeles on sõna: {translation}")
         else:
-            print("Vene keeles pole sõna: ", sona)
-    elif valik==2:
-        print(tolgi_rus_est)
-    elif valik==3:
-        print(lisa_sona)
-    elif valik==4:
-        print(paranda_sona)
-    elif valik==5:
-        print(testi_tewissen)
-    elif valik==6:
+            print("Слово не знайдено в словнику.")
+    elif valik == 2:
+        tolgi_rus_est(RU, "")
+    elif valik == 3:
+        lisa_sona(EE, RU, "", "")
+        salvestamine_faili('EE.txt', EE)
+        salvestamine_faili('RU.txt', RU)
+    elif valik == 4:
+        paranda_sona(EE, RU, "", "", "")
+        salvestamine_faili('EE.txt', EE)
+        salvestamine_faili('RU.txt', RU)
+    elif valik == 5:
+        testi_tewissen(EE, RU, "")
+    elif valik == 6:
+        salvestamine_faili('EE.txt', EE)
+        salvestamine_faili('RU.txt', RU)
         break
+        
