@@ -72,11 +72,14 @@ def laadimine_failist(Sõnastik: str):
     try:
         with open(Sõnastik, 'r', encoding='utf-8-sig') as file:
             for line in file:
-                key, value = line.strip().split(':')
-                d[key] = value
+                parts = line.strip().split(':')
+                if len(parts) == 2:
+                    key, value = line.strip().split(':')
+                    d[key] = value
     except FileNotFoundError:
         pass
     return d
+
 #1
 def tolgi_est_rus(EE: dict, sona: str):
     """ Funktsioon tõlgib eesti keele sõna vene keelde.
@@ -88,7 +91,6 @@ def tolgi_est_rus(EE: dict, sona: str):
     :type RU: dict
     :return: vene keele tõlge
     """
-    sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
     return EE.get(sona)
 
 #2
@@ -102,7 +104,6 @@ def tolgi_rus_est(RU: dict, sona: str):
     :type RU: dict
     :return: eesti keele tõlge
     """
-    sona=str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
     return RU.get(sona)
 
 #3

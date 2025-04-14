@@ -79,12 +79,11 @@ while True:
     if valik == 1:
         sona = str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
         translation = tolgi_est_rus(EE, sona)
-        if translation:
-            print(f"Vene keeles on sõna: {translation}")
-        else:
-            print("Слово не знайдено в словнику.")
+        print(f"Vene keeles on sõna: {translation}")
     elif valik == 2:
-        tolgi_rus_est(RU, "")
+        sona = str(input("Sisestage sõna, mida soovite tõlkida: ")).strip().lower()
+        translation = tolgi_rus_est(RU, "")
+        print(f"Vene keeles on sõna: {translation}")"")
     elif valik == 3:
         lisa_sona(EE, RU, "", "")
         salvestamine_faili('EE.txt', EE)
