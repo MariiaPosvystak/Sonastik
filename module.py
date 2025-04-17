@@ -72,9 +72,9 @@ def laadimine_failist(Sõnastik: str):
     try:
         with open(Sõnastik, 'r', encoding='utf-8-sig') as file:
             for line in file:
-                parts = line.strip().split(':')
+                parts = line.strip().split(' - ')
                 if len(parts) == 2:
-                    key, value = line.strip().split(':')
+                    key, value = line.strip().split(' - ')
                     d[key] = value
     except FileNotFoundError:
         pass

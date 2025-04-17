@@ -1,10 +1,10 @@
-﻿koer:собака
-kodu:дом
-päike:солнце
-mets:лес
-palun:пожалуйста
-hommik:утро
-kool:школа
-raamat:книга
-sinine:синий
-taevas:небо
+﻿koer - собака
+kodu - дом
+päike - солнце
+mets - лес
+palun - пожалуйста
+hommik - утро
+kool - школа
+raamat - книга
+sinine - синий
+taevas - небо
