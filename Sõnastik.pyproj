@@ -25,8 +25,7 @@
     <Compile Include="Sõnastik.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EE.txt" />
-    <Content Include="RU.txt" />
+    <Content Include="sonad.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

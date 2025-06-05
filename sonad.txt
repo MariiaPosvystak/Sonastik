@@ -1,0 +1,7 @@
+﻿{'est': 'koer', 'rus': 'собака'}
+{'est': 'mets', 'rus': 'лес'}
+{'est': 'maja', 'rus': 'дом'}
+{'est': 'palun', 'rus': 'пожалуйста'}
+{'est': 'päike', 'rus': 'солнце'}
+{'est': 'kool', 'rus': 'школа'}
+{'est': 'raamat', 'rus': 'книга'}

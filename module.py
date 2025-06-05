@@ -1,174 +1,123 @@
-﻿# Практическая работа - Двуязычный словарь в Python (использование dict())
-#  Эстонский язык 🇪🇪
-#  Русский язык 🇷🇺
-# Описание задачи:
-# Создайте программу, позволяющую пользователю работать с двуязычным эстонско-русским словарем.
-# Словарь хранится в Python в виде структуры данных dict().
-# Основные функции программы:
-#  Перевод с эстонского на русский
-#  Перевод с русского на эстонский
-#  Добавление нового слова в словарь
-#  Исправление слова в словаре
-#  Если пользователь заметит, что слово написано неправильно, его можно исправить.
-#     Если пользователь заметил неправильно написанное слово, оно исправляется. Если пользователь нашел неправильно написанное слово, оно исправляется.
-#         Пользователь вводит перевод.
-#         Программа сообщает, правильным или неправильным был ответ.
-#  В конце теста выводится процент правильных ответов (%).
-# Дополнительные пункты:
-#  При желании добавьте функцию, которая читает слово вслух (text-to-speech). 🎤 🎤
-# Структура программы:
-#  Данные изначально хранятся в Python в виде dict():
-#  sonastik = {
-#  'dog': 'dog',
-#  'cat': 'cat',
-#  'house': 'house',
-#  'car': 'car',
-#  'sun': 'солнце'
-#  }
-#  Программа должна содержать не менее 5 отдельных функций, например:
-#  tolgi_est_rus(sona)
-#  tolgi_rus_est(sona)
-#  lisa_sona()
-#  paranda_sona()
-#  testi_tewissen()
-#  Программа должна работать в бесконечном цикле, пока пользователь не решит выйти.
-# Programmi näidis:
-# Tere tulemast eesti-vene sõnastikku!
-
-# Valikud:
-# 1 - Tõlgi eesti -> vene
-# 2 - Tõlgi vene -> eesti
-# 3 - Lisa uus sõna
-# 4 - Paranda sõna
-# 5 - Testi teadmisi
-# 6 - Välju
-# Tee oma valik: 1
-
-# Sisesta sõna eesti keeles: koer
-# Tõlge vene keelde: собака
-
-# Tee oma valik: 3
-# Sisesta uus sõna eesti keeles: arvuti
-# Sisesta selle sõna vene tõlge: компьютер
-# Sõna lisatud!
-
-# Tee oma valik: 5
-# Testi teadmisi alustatakse!
-# Sisesta vene tõlge sõnale 'maja': дом
-# Õige!
-# Sisesta vene tõlge sõnale 'päike': солнце
-# Õige!
-# Test lõppenud! Sinu tulemus: 100%
-EE=dict()
-RU=dict()
-
-def salvestamine_faili(Sõnastik: str, d: dict):
-    with open(Sõnastik, 'w', encoding='utf-8-sig') as file:
-        for key, value in d.items():
-            file.write(f"{key}:{value}\n")
-
-def laadimine_failist(Sõnastik: str):
-    d = {}
-    try:
-        with open(Sõnastik, 'r', encoding='utf-8-sig') as file:
-            for line in file:
-                parts = line.strip().split(' - ')
-                if len(parts) == 2:
-                    key, value = line.strip().split(' - ')
-                    d[key] = value
-    except FileNotFoundError:
-        pass
-    return d
+﻿import random
 
 #1
-def tolgi_est_rus(EE: dict, sona: str):
-    """ Funktsioon tõlgib eesti keele sõna vene keelde.
-    :param sona: sõna, mida soovitakse tõlkida
-    :param EE: eesti keele sõnastik
-    :param RU: vene keele sõnastik
-    :type sona: str
-    :type EE: dict
-    :type RU: dict
-    :return: vene keele tõlge
+def tolgi(fail:str, sona: str):
+    """ 
     """
-    return EE.get(sona)
+    s=("Seda sõna ei ole sõnaraamatus!")
+    with open(fail, 'r', encoding="utf-8-sig") as f:
+        sonad = []
+        for rida in f:
+            sonad.append(eval(rida.strip()))
+    for kirje in sonad:
+        if kirje['est'].lower() == sona.lower():
+            s=(f"{sona} - rus: {kirje['rus']}")
+            break
+        elif kirje['rus'].lower()==sona.lower():
+            s=(f"{sona} - est: {kirje['est']}")
+            break
+    return s
 
 #2
-def tolgi_rus_est(RU: dict, sona: str):
-    """ Funktsioon tõlgib vene keele sõna eesti keede.
-    :param sona: sõna, mida soovitakse tõlkida
-    :param EE: eesti keele sõnastik
-    :param RU: vene keele sõnastik
-    :type sona: str
-    :type EE: dict
-    :type RU: dict
-    :return: eesti keele tõlge
+def lisa_sona(fail: str):
+    """ 
     """
-    return RU.get(sona)
+    while True:
+        est_sona=str(input("Sisesta sona eesti keeles:")).lower().strip()
+        if est_sona.isalpha(): break
+        else: 
+            print("Sõna peab koosnema ainult tähtedest!")
+    while True:
+        rus_sona=str(input("Sisesta sona vene keeles:")).lower().strip()
+        if rus_sona.isalpha(): break
+        else:
+             print("Sõna peab koosnema ainult tähtedest!")
+
+    uus_sona = {'est': est_sona, 'rus': rus_sona}
+    with open(fail, 'a', encoding="utf-8-sig") as f :
+        f.write(str(uus_sona)+'\n')
+    print("Sõna on lisatud!")
 
 #3
-def lisa_sona(EE: dict, RU: dict, est: str, rus: str):
-    """ Funktsioon lisab sõna eesti-vene sõnastikku.
-    :param est: eesti keele sõna
-    :param rus: vene keele sõna
-    :param EE: eesti keele sõnastik
-    :param RU: vene keele sõnastik
-    :type est: str
-    :type rus: str
-    :type EE: dict
-    :type RU: dict
-    :return: sõna lisamine sõnastikku
+def paranda_sona(fail: str):
     """
-    est=str(input("Sisestage sõna eesti keeles: ")).strip().lower()
-    rus=str(input("Sisestage sõna vene keeles: ")).strip().lower()
-    EE[est] = "rus"
-    RU[rus] = "est"
-    return est, rus
+    """
+    s=("Seda sõna ei ole sõnaraamatus!")
+    while True:
+        sona = input("Sisestage sõna, mida soovite muuta: ")
+        if sona.isalpha(): break
+        else:
+            print("Sõna peab sisaldama ainult tähti!")
+    with open(fail, 'r', encoding="utf-8-sig") as f:
+        sonad = []
+        for rida in f:
+            sonad.append(eval(rida.strip()))
+        indeks=-1
+        i=0
+        while i< len(sonad):
+            kirje=sonad[i]
+            if sona.lower() in [kirje["est"].lower(), kirje["rus"].lower()]:
+                h=(f"est: {kirje['est']}, rus: {kirje['rus']}")
+                indeks=i
+                break
+            i+=1
+        print(s)
+    while True:
+        uus_sona_ee=str(input("Sisesta sona eesti keeles:")).lower().strip()
+        if uus_sona_ee.isalpha(): break
+        else: 
+            print("Sõna peab koosnema ainult tähtedest!")
+    while True:
+        uus_sona_ru=str(input("Sisesta sona vene keeles:")).lower().strip()
+        if uus_sona_ru.isalpha(): break
+        else:
+             print("Sõna peab koosnema ainult tähtedest!")
+    sonad[i] = {'est': uus_sona_ee, 'rus': uus_sona_ru}
+    with open(fail, 'w', encoding="utf-8-sig") as f :
+        for kirje in sonad:
+            f.write(str(kirje)+'\n')
+    print("Sõna on muudatud!")
 
 #4
-def paranda_sona(EE: dict, RU: dict, s: str, new_rus: str, new_est: str):
-    """ Funktsioon parandab sõna eesti-vene sõnastikus.
-    :param EE: eesti keele sõnastik
-    :param RU: vene keele sõnastik
-    :type EE: dict
-    :type RU: dict
-    :return: sõna parandamine sõnastikus
+def testi_tewissen(fail: str):
+    """ 
     """
-    s = input("Sisestage sõna, mida soovite parandada: ").strip().lower()
-    if s in EE:
-        print(f"Sõna leiti eesti-vene sõnastikust: {s} -> {EE[s]}")
-        new_rus = input("Sisestage parandatud sõna vene keeles: ").strip().lower()
-        EE[s] = new_rus 
-        RU[new_rus] = s  
-        print("Sõna parandati edukalt!")
-    elif s in RU:
-        print(f"Sõna leiti vene-eesti sõnastikust: {s} -> {RU[s]}")
-        new_est = input("Sisestage parandatud sõna eesti keeles: ").strip().lower()
-        RU[s] = new_est 
-        EE[new_est] = s 
-        print("Sõna parandati edukalt!")
-    else:
-        print("Sõna ei leitud sõnastikust")
-
-#5
-def testi_tewissen(EE: dict, RU: dict, answer: str):
-    """ Funktsioon testib teadmisi eesti-vene sõnastikus.
-    :param EE: eesti keele sõnastik
-    :param RU: vene keele sõnastik
-    :type EE: dict
-    :type RU: dict
-    :return: testi tulemused
-    """
-    correct=0
-    total=0
-    print("Testi algus\n"
-          "Sisestage sõna tõlge eesti keeles")
-    for est, rus in EE.items():
-        total +=1
-        answer=input(rus).strip().lower()
-        if answer==est:
+    with open(fail, 'r', encoding='utf-8-sig') as f:
+        sonad = []
+        for rida in f:
+            sonad.append(eval(rida.strip()))
+    print("Test")
+    print("Reeglid: ma annan teile valitud keeles sõna ja te tõlgite selle teise keelde. Väljumiseks kirjutage „exit“.")
+    õigesti = 0
+    kõik = 0
+    while True:
+        random_sõnastik = random.choice(sonad)
+        while True:
+            language = str(input("Valige keel, millest tõlkida (est, rus): ")).strip().lower()
+            if language == 'rus' or language == 'est':
+                break
+            else:
+                print("Keel peab olema:'est' või 'rus'!")
+        random_sone = random_sõnastik[language]
+        while True:
+            language1 = str(input("Valige keel, millesse tõlkida (est, rus): ")).strip().lower()
+            if language1 == 'rus' or language1 == 'est':
+                if language1 != language:
+                    break
+                else:
+                    print("Valige keel, millesse soovite tõlkida")
+            else:
+                print("Keel peab olema:'est' või 'rus'!")
+        print(f"Tõlgi sõna '{random_sone}' suust suhu '{language}' keelel '{language1}'")
+        vastus = input("Teie vastus (või „exit“, et väljuda): ").strip().lower()
+        if vastus == "exit":
+           print(f"Õiged vastused: {õigesti} / {kõik}")
+           print("Test on lõppenud!")
+           break
+        kõik = kõik + 1
+        õigest_vastus = random_sõnastik[language1]
+        if vastus == õigest_vastus:
             print("Õige!")
-            correct +=1
+            õigesti = õigesti + 1
         else:
-            print(f"Vale, õige vastus on - {est}")
-    print(f"Test on lõppenud! Teie tulemus: {correct/total*100}%")
+            print(f"Vale! Õige vastus on: {õigest_vastus}")
