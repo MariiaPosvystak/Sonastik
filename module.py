@@ -75,7 +75,7 @@ def paranda_sona(fail: str):
     sonad[i] = {'est': uus_sona_ee, 'rus': uus_sona_ru}
     with open(fail, 'w', encoding="utf-8-sig") as f :
         for kirje in sonad:
-            f.write(str(kirje)+'\n')
+            f.write(str(kirje)+'\n') #Записывает каждый словарь в файл в виде строки с новой строкой.
     print("Sõna on muudatud!")
 
 #4
